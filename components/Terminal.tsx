@@ -1,10 +1,13 @@
 "use client";
 
 import { sendRequest } from "@/lib/api";
+import { commands } from "@/lib/commands";
 import { useEffect, useState } from "react";
 
 export default function Terminal() {
   const [ip, setIp] = useState("Loading...");
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
 
   useEffect(() => {
     async function loadIp() {
@@ -15,15 +18,52 @@ export default function Terminal() {
     loadIp();
   }, []);
 
+  function runCommand() {
+    const command = input.trim().toLowerCase();
+
+    if (!command) return;
+
+    let output = commands[command];
+
+    if (!output) {
+      output = `Command not found: ${command}`;
+    }
+
+    setHistory([
+      ...history,
+      `> ${command}`,
+      output
+    ]);
+
+    setInput("");
+  }
+
   return (
     <div className="min-h-screen bg-black text-cyan-400 font-mono p-6">
-      <h1>test header</h1>
+      <h1>Crosszay website thing 0.0.1</h1>
 
       <p>Welcome, {ip}</p>
 
       <div className="mt-4">
-        <span>&gt; </span>
-        <span className="animate-pulse">█</span>
+        {history.map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+
+        <div className="flex">
+          <span>&gt; </span>
+
+          <input
+            className="bg-transparent outline-none flex-1"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                runCommand();
+              }
+            }}
+            autoFocus
+          />
+        </div>
       </div>
     </div>
   );

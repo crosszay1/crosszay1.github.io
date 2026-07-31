@@ -44,7 +44,7 @@ export default function Terminal() {
         ))}
 
         <div className="flex">
-          <span>&gt; </span>
+          <span>{'>'}</span>
 
           <input
             className="bg-transparent outline-none flex-1"

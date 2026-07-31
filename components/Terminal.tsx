@@ -40,7 +40,7 @@ export default function Terminal() {
 
   return (
     <div className="min-h-screen bg-black text-cyan-400 font-mono p-6">
-      <h1>Crosszay website thing 0.0.1</h1>
+      <h1>Crosszay website thing v0.0.1</h1>
 
       <p>Welcome, {ip}</p>
 

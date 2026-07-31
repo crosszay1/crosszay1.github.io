@@ -20,20 +20,14 @@ export default function Terminal() {
 
   function runCommand() {
     const command = input.trim().toLowerCase();
-
     if (!command) return;
 
     let output = commands[command];
-
     if (!output) {
       output = `Command not found: ${command}`;
     }
 
-    setHistory([
-      ...history,
-      `> ${command}`,
-      output
-    ]);
+    setHistory([...history, `> ${command}`, output]);
 
     setInput("");
   }

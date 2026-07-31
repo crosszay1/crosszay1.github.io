@@ -33,7 +33,9 @@ export default function Terminal() {
       output = `Command not found: ${command}`;
     }
 
-    setHistory([...history, `> ${command}`, output]);
+    const browserSafeOutput = output.replace(/\x1b\[[0-9;]*m/g, ""); // Fucking remove the weird stuff here. (I'm slightly annoyed)
+
+    setHistory([...history, `> ${command}`, browserSafeOutput]);
 
     setInput("");
   }
@@ -46,7 +48,9 @@ export default function Terminal() {
 
       <div className="mt-4">
         {history.map((line, index) => (
-          <p key={index}>{line}</p>
+          <pre key={index} className="m-0 whitespace-pre-wrap">
+            {line}
+          </pre>
         ))}
 
         <div className="flex">

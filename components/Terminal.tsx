@@ -20,10 +20,16 @@ export default function Terminal() {
 
   function runCommand() {
     const command = input.trim().toLowerCase();
+
     if (!command) return;
 
-    let output = commands[command];
-    if (!output) {
+    const commandFunction = commands[command];
+
+    let output: string;
+
+    if (commandFunction) {
+      output = commandFunction();
+    } else {
       output = `Command not found: ${command}`;
     }
 
@@ -44,7 +50,7 @@ export default function Terminal() {
         ))}
 
         <div className="flex">
-          <span>{'>'}</span>
+          <span>{">"}</span>
 
           <input
             className="bg-transparent outline-none flex-1"

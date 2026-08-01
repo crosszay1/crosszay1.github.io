@@ -1,5 +1,14 @@
 export const commands: Record<string, (args?: string[]) => string> = {
-  help: () => "Commands: help, src",
+  help: () =>
+    [
+      "Available commands:",
+      "  help      - Show this help message",
+      "  src       - Open the site's GitHub repository",
+      "  neofetch  - Display system information",
+      "  contact   - Show contahct info",
+      "  whoami    - Short bio",
+      "  echo      - Repeat input",
+    ].join("\n"),
 
   src: () => {
     window.open("https://github.com/crosszay1/crosszay1.github.io", "_blank");
@@ -7,7 +16,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
   },
 
   neofetch: () => {
-    return [
+    return [ // There's gotten be a better way.. there's gotta be
       "",
       "                                               \x1b[90m┌──────────────────────Hardware──────────────────────┐",
       "                                                PC: 82QD (IdeaPad 1 15IAU7)",

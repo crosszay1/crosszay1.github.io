@@ -38,4 +38,8 @@ export const commands: Record<string, () => string> = {
       "",
     ].join("\n");
   },
+
+  contact: () => "@crosszay on discord",
+
+  whoami: () => "I'm crosszay, a self-taught programmer, fullstack developer, and FOSS enthusiast."
 };

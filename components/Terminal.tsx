@@ -19,23 +19,27 @@ export default function Terminal() {
   }, []);
 
   function runCommand() {
-    const command = input.trim().toLowerCase();
+    const trimmed = input.trim();
 
-    if (!command) return;
+    if (!trimmed) return;
 
-    const commandFunction = commands[command];
+    const parts = trimmed.split(/\s+/);
+    const commandName = parts[0].toLowerCase();
+    const args = parts.slice(1);
+
+    const commandFunction = commands[commandName];
 
     let output: string;
 
     if (commandFunction) {
-      output = commandFunction();
+      output = commandFunction(args);
     } else {
-      output = `Command not found: ${command}`;
+      output = `Command not found: ${commandName}`;
     }
 
-    const browserSafeOutput = output.replace(/\x1b\[[0-9;]*m/g, ""); // Fucking remove the weird stuff here. (I'm slightly annoyed)
+    const browserSafeOutput = output.replace(/\x1b\[[0-9;]*m/g, "");
 
-    setHistory([...history, `> ${command}`, browserSafeOutput]);
+    setHistory([...history, `> ${trimmed}`, browserSafeOutput]);
 
     setInput("");
   }

@@ -54,4 +54,8 @@ export const commands: Record<string, (args?: string[]) => string> = {
     "I'm crosszay, a self-taught programmer, fullstack developer, and FOSS enthusiast.",
 
   echo: (args = []) => args.join(" "),
+
+  clear: () => {
+    return "__CLEAR__"; // We can detect this and reset the history
+  }
 };

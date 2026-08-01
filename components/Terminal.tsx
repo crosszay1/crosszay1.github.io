@@ -37,6 +37,12 @@ export default function Terminal() {
       output = `Command not found: ${commandName}`;
     }
 
+    if (output === "__CLEAR__") {
+      setHistory([]);
+      setInput("");
+      return;
+    }
+
     const browserSafeOutput = output.replace(/\x1b\[[0-9;]*m/g, "");
 
     setHistory([...history, `> ${trimmed}`, browserSafeOutput]);

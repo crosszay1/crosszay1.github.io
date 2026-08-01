@@ -1,20 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sendRequest } from "@/lib/api";
 
 type BootLine =
   | { type: "text"; text: string; delay?: number }
   | { type: "bar"; label: string; duration?: number }
 
+const [ip, setIp] = useState("Loading...");
+
+  useEffect(() => {
+    async function loadIp() {
+      const data = await sendRequest("/api/ip");
+      setIp(data.ip);
+    }
+
+    loadIp();
+  }, []);
 
 const text_sequence: BootLine[] = [
   { type: "text", text: "C-BIOS v0.0.1", delay: 300 }, //must switch to crosszay bios or something idk
   { type: "text", text: "", delay: 150 },
   { type: "bar", label: "Detecting hardware...", duration: 400 },
-  { type: "bar", label: "memory check", duration: 900 },
+  { type: "bar", label: "Memory check", duration: 900 },
   { type: "bar", label: "Mounting /dev/nvme0", duration: 700 },
   { type: "text", text: "", delay: 150 },
-  { type: "text", text: "Welcome user", delay: 1000 }, // put ip here later
+  { type: "text", text: `Welcome ${ip}`, delay: 1000 },
 ];
 
 interface BootProps {

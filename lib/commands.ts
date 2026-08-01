@@ -41,7 +41,8 @@ export const commands: Record<string, (args?: string[]) => string> = {
 
   contact: () => "@crosszay on discord",
 
-  whoami: () => "I'm crosszay, a self-taught programmer, fullstack developer, and FOSS enthusiast.",
+  whoami: () =>
+    "I'm crosszay, a self-taught programmer, fullstack developer, and FOSS enthusiast.",
 
   echo: (args = []) => args.join(" "),
 };

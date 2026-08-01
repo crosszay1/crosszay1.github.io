@@ -1,5 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import Boot from "@/components/boot";
 import Terminal from "@/components/Terminal";
 
 export default function Home() {
-  return <Terminal />;
+  const [booted, setBooted] = useState(false);
+
+  return booted ? <Terminal /> : <Boot onComplete={() => setBooted(true)} />;
 }

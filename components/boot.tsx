@@ -7,27 +7,6 @@ type BootLine =
   | { type: "text"; text: string; delay?: number }
   | { type: "bar"; label: string; duration?: number }
 
-const [ip, setIp] = useState("Loading...");
-
-  useEffect(() => {
-    async function loadIp() {
-      const data = await sendRequest("/api/ip");
-      setIp(data.ip);
-    }
-
-    loadIp();
-  }, []);
-
-const text_sequence: BootLine[] = [
-  { type: "text", text: "C-BIOS v0.0.1", delay: 300 }, //must switch to crosszay bios or something idk
-  { type: "text", text: "", delay: 150 },
-  { type: "bar", label: "Detecting hardware...", duration: 400 },
-  { type: "bar", label: "Memory check", duration: 900 },
-  { type: "bar", label: "Mounting /dev/nvme0", duration: 700 },
-  { type: "text", text: "", delay: 150 },
-  { type: "text", text: `Welcome ${ip}`, delay: 1000 },
-];
-
 interface BootProps {
   onComplete: () => void;
   sequence?: BootLine[];
@@ -35,7 +14,7 @@ interface BootProps {
 
 export default function Boot({
   onComplete,
-  sequence = text_sequence,
+  sequence,
 }: BootProps) {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [typedText, setTypedText] = useState("");
@@ -43,6 +22,32 @@ export default function Boot({
   const [barLabel, setBarLabel] = useState("");
   const [done, setDone] = useState(false);
   const cancelled = useRef(false);
+  const ip = useRef("Loading...");
+
+  useEffect(() => {
+    async function loadIp() {
+      try {
+        const data = await sendRequest("/api/ip");
+        ip.current = data.ip;
+      } catch {
+        ip.current = "unknown";
+      }
+    }
+
+    loadIp();
+  }, []);
+
+  const defaultSequence: BootLine[] = [
+    { type: "text", text: "C-BIOS v0.0.1", delay: 300 }, //must switch to crosszay bios or something idk
+    { type: "text", text: "", delay: 150 },
+    { type: "bar", label: "Detecting hardware...", duration: 400 },
+    { type: "bar", label: "Memory check", duration: 900 },
+    { type: "bar", label: "Mounting /dev/nvme0", duration: 700 },
+    { type: "text", text: "", delay: 150 },
+    { type: "text", text: "Welcome {ip}", delay: 1000 },
+  ];
+
+  const activeSequence = sequence ?? defaultSequence;
 
   useEffect(() => {
     cancelled.current = false;
@@ -72,13 +77,14 @@ export default function Boot({
     }
 
     async function run() {
-      for (const line of sequence) {
+      for (const line of activeSequence) {
         if (cancelled.current) return;
 
         if (line.type === "text") {
+          const text = line.text.replace("{ip}", ip.current);
           setTypedText("");
-          await typeLine(line.text);
-          setVisibleLines((prev) => [...prev, line.text]);
+          await typeLine(text);
+          setVisibleLines((prev) => [...prev, text]);
           setTypedText("");
           await sleep(line.delay ?? 200);
         } else {

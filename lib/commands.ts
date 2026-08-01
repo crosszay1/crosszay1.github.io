@@ -5,7 +5,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
       "  help      - Show this help message",
       "  src       - Open the site's GitHub repository",
       "  neofetch  - Display system information",
-      "  contact   - Show contahct info",
+      "  contact   - Show contact info",
       "  whoami    - Short bio",
       "  echo      - Repeat input",
     ].join("\n"),

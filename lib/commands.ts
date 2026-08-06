@@ -8,6 +8,8 @@ export const commands: Record<string, (args?: string[]) => string> = {
       "  contact   - Show contact info",
       "  whoami    - Short bio",
       "  echo      - Repeat input",
+      "  projects  - List of projects",
+      "  clear     - Clear the terminal",
     ].join("\n"),
 
   src: () => {

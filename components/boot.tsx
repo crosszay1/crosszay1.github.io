@@ -5,17 +5,14 @@ import { sendRequest } from "@/lib/api";
 
 type BootLine =
   | { type: "text"; text: string; delay?: number }
-  | { type: "bar"; label: string; duration?: number }
+  | { type: "bar"; label: string; duration?: number };
 
 interface BootProps {
   onComplete: () => void;
   sequence?: BootLine[];
 }
 
-export default function Boot({
-  onComplete,
-  sequence,
-}: BootProps) {
+export default function Boot({ onComplete, sequence }: BootProps) {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [typedText, setTypedText] = useState("");
   const [barPercent, setBarPercent] = useState<number | null>(null);

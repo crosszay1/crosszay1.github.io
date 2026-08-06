@@ -16,7 +16,8 @@ export const commands: Record<string, (args?: string[]) => string> = {
   },
 
   neofetch: () => {
-    return [ // There's gotten be a better way.. there's gotta be
+    return [
+      // There's gotten be a better way.. there's gotta be
       "",
       "                                               \x1b[90m┌──────────────────────Hardware──────────────────────┐",
       "                                                PC: 82QD (IdeaPad 1 15IAU7)",
@@ -57,5 +58,22 @@ export const commands: Record<string, (args?: string[]) => string> = {
 
   clear: () => {
     return "__CLEAR__"; // We can detect this and reset the history
-  }
+  },
+
+  projects: () => {
+    return [
+      "",
+      "[==========================]",
+      "        PROJECTS",
+      "[==========================]",
+      "",
+      "Full list: https://github.com/crosszay1",
+      "",
+      "[ RathHacksRedCLinux ]",
+      "A custom built linux distribution for the RathHacks NonProfit. Designed to be lightweight, responsive, and easy to use for students, it was shipped to many under-privilleged students who would not otherwise been able to afford a computer.",
+      "[ JoshBot ]",
+      " A Discord bot that aims to help bring cybersecurity and OSINT tools to the general public. By replacing a complicated CLI with an easy-to-use Discord bot, JoshBot allows users to easily access and utilize these tools without needing to understand the underlying technology.",
+      "",
+    ].join("\n");
+  },
 };

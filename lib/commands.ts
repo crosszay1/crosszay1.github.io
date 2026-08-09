@@ -51,7 +51,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
     ].join("\n");
   },
 
-  contact: () => "@crosszay on discord",
+  contact: () => "You can contact on Discord @crosszay",
 
   whoami: () =>
     "I'm crosszay, a self-taught programmer, fullstack developer, and FOSS enthusiast.",

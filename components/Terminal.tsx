@@ -52,9 +52,10 @@ export default function Terminal() {
 
   return (
     <div className="min-h-screen bg-black text-cyan-400 font-mono p-6">
-      <h1>Crosszay website thing v0.0.1</h1>
+      <h1>Crosszay's website v0.0.3</h1>
 
       <p>Welcome, {ip}</p>
+      <p>Type help for a list of commands</p>
 
       <div className="mt-4">
         {history.map((line, index) => (

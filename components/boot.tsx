@@ -19,6 +19,7 @@ export default function Boot({ onComplete, sequence }: BootProps) {
   const [barLabel, setBarLabel] = useState("");
   const [done, setDone] = useState(false);
   const cancelled = useRef(false);
+  const skipped = useRef(false);
   const ip = useRef("Loading...");
 
   useEffect(() => {
@@ -32,6 +33,19 @@ export default function Boot({ onComplete, sequence }: BootProps) {
     }
 
     loadIp();
+  }, []);
+
+  // Listen for spacebar to skip the boot animation
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.code === "Space" || e.key === " ") {
+        e.preventDefault();
+        skipped.current = true;
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const defaultSequence: BootLine[] = [
@@ -50,12 +64,21 @@ export default function Boot({ onComplete, sequence }: BootProps) {
     cancelled.current = false;
 
     async function sleep(ms: number) {
+      if (skipped.current) return Promise.resolve();
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     async function typeLine(text: string) {
+      if (skipped.current) {
+        setTypedText(text);
+        return;
+      }
       for (let i = 0; i <= text.length; i++) {
         if (cancelled.current) return;
+        if (skipped.current) {
+          setTypedText(text);
+          return;
+        }
         setTypedText(text.slice(0, i));
         await sleep(30);
       }
@@ -63,9 +86,18 @@ export default function Boot({ onComplete, sequence }: BootProps) {
 
     async function runBar(label: string, duration: number) {
       setBarLabel(label);
+      if (skipped.current) {
+        setBarPercent(100);
+        setBarPercent(null);
+        return;
+      }
       const steps = 30;
       for (let i = 0; i <= steps; i++) {
         if (cancelled.current) return;
+        if (skipped.current) {
+          setBarPercent(null);
+          return;
+        }
         setBarPercent(Math.round((i / steps) * 100));
         await sleep(duration / steps);
       }

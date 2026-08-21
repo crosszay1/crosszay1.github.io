@@ -62,6 +62,12 @@ export class fileSystem {
     return node !== null && getType(node) === "dir";
   }
 
+  public cd(path: string): boolean {
+    if (!this.isDirValid(path)) return false;
+    this.currentDir = this.getNode(path) as DirNode;
+    return true;
+  }
+
   public readFile(path: string): string | null {
     const node = this.getNode(path);
 
@@ -101,3 +107,5 @@ export class fileSystem {
     return "placeholder";
   }
 }
+
+export const fs = new fileSystem();

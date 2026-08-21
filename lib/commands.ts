@@ -1,3 +1,5 @@
+import { fs } from "@/lib/fs";
+
 export const commands: Record<string, (args?: string[]) => string> = {
   help: () =>
     [
@@ -10,6 +12,8 @@ export const commands: Record<string, (args?: string[]) => string> = {
       "  echo      - Repeat input",
       "  projects  - List of projects",
       "  clear     - Clear the terminal",
+      "  ls        - List directory contents",
+      "  cd        - Change directory",
     ].join("\n"),
 
   src: () => {
@@ -60,6 +64,19 @@ export const commands: Record<string, (args?: string[]) => string> = {
 
   clear: () => {
     return "__CLEAR__"; // We can detect this and reset the history
+  },
+
+  ls: (args = []) => {
+    const path = args[0] ?? ".";
+    const listing = fs.listDirectory(path);
+    if (!listing) return `No such file or directory`;
+    return Object.keys(listing).join("\n");
+  },
+
+  cd: (args = []) => {
+    const path = args[0] ?? "/";
+    if (!fs.cd(path)) return `No such file or directory: ${path}`;
+    return "";
   },
 
   projects: () => {

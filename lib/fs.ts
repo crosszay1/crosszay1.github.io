@@ -40,20 +40,36 @@ function fileKind(name: string): string {
 
 export class fileSystem {
   public currentDir: DirNode;
+  private currentPath: string[] = [];
+
   constructor() {
     this.currentDir = root;
   }
 
-  private getNode(path: string): FsNode | null {
-    let node: FsNode = path.startsWith("/") ? root : this.currentDir;
+  private resolve(path: string): { node: FsNode; path: string[] } | null {
+    const stack = path.startsWith("/") ? [] : [...this.currentPath];
     const parts = path.split("/").filter((part) => part && part !== ".");
+
     for (const part of parts) {
+      if (part === "..") {
+        stack.pop();
+        continue;
+      }
+      stack.push(part);
+    }
+
+    let node: FsNode = root;
+    for (const part of stack) {
       if (getType(node) !== "dir") return null;
       const next: FsNode | undefined = (node as DirNode).children[part];
       if (!next) return null;
       node = next;
     }
-    return node;
+    return { node, path: stack };
+  }
+
+  private getNode(path: string): FsNode | null {
+    return this.resolve(path)?.node ?? null;
   }
 
   public isDirValid(path: string): boolean {
@@ -63,8 +79,10 @@ export class fileSystem {
   }
 
   public cd(path: string): boolean {
-    if (!this.isDirValid(path)) return false;
-    this.currentDir = this.getNode(path) as DirNode;
+    const resolved = this.resolve(path);
+    if (!resolved || getType(resolved.node) !== "dir") return false;
+    this.currentDir = resolved.node as DirNode;
+    this.currentPath = resolved.path;
     return true;
   }
 

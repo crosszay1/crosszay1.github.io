@@ -14,6 +14,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
       "  clear     - Clear the terminal",
       "  ls        - List directory contents",
       "  cd        - Change directory",
+      " open      - Open a file",
     ].join("\n"),
 
   src: () => {
@@ -83,7 +84,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
     const path = args[0] ?? "";
     if (fs.isDirValid(path)) return `${path} is a directory: ${path}`;
     if (fs.openFile(path) === null) return `No such file or directory: ${path}`;
-    
+
     // Okay now we gotta figure out what the content of the file is. At some point we'll have multiple file types, but for now just txt files
     const content = fs.readFile(path);
     if (content === null) return `Error` // Just so typescript stops complaining, but this should never happen since we already checked if the file exists and is a file

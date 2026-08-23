@@ -41,6 +41,20 @@ const root: DirNode = {
         },
       },
     },
+    projects: {
+      type: "dir",
+      children: {
+        "Terrific-Image-Format" : {
+          type: "dir",
+          children: {
+            "README.md": {
+              type: "file",
+              content: "A custom image format I designed and led with a few friends. It supports 256 colors, GZIP text compression, and file sizes comparable to PNG.",
+            }
+          }
+        }
+      },
+    },
   },
 };
 
@@ -110,14 +124,9 @@ export class fileSystem {
     const node = this.getNode(path);
 
     if (!node || getType(node) !== "file") {
-      // This is super lazy | we need to have multiple file types, not just "file"
-      // More concerned with finsihing this so I can get impl running
-      // then I'll deal with it
       return null;
     }
 
-    const name = path.split("/").filter(Boolean).pop() ?? "";
-    if (fileKind(name) !== "txt") return null;
     return (node as FileNode).content;
   }
 
@@ -140,9 +149,7 @@ export class fileSystem {
   }
 
   public openFile(path: string): string | null {
-    // Universal opener for files (music, images, videos later). `cat` stays for reading.
-    if (!this.fileExists(path)) return null;
-    return this.readFile(path) ?? "";
+    return this.readFile(path);
   }
 }
 

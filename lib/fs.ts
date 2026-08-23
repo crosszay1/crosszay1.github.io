@@ -13,16 +13,31 @@ export type FsNode = FileNode | DirNode;
 const root: DirNode = {
   type: "dir",
   children: {
-    "test.txt": {
+    "README.md": {
       type: "file",
-      content: "Hello from file system.",
+      content: "Welcome to the FileSystem!",
     },
-    directory: {
+    skills: {
       type: "dir",
       children: {
-        "another_file.txt": {
+        "languages.txt": {
           type: "file",
-          content: "File 2",
+          content: "I am proficient in Typescript, Python, and ASM in the context of static reverse engineering. I also have experience with LuaU.",
+        },
+      },
+    },
+    about: {
+      type: "dir",
+      children: {
+        "experience.txt": {
+          type: "file",
+          content: `I've done professional browser automation and AI systems development work.
+          This is my internet persona, so I won't elaborate further :)
+          I've also shut down a few malware campaigns`,
+        },
+        "education.txt": {
+          type: "file",
+          content: `I've never taken a formal CS course. Everything I know and have learned has been as a product of my own relentless curiosity.`,
         },
       },
     },

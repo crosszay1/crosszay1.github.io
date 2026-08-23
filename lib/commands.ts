@@ -14,7 +14,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
       "  clear     - Clear the terminal",
       "  ls        - List directory contents",
       "  cd        - Change directory",
-      " open      - Open a file",
+      "  open      - Open a file",
     ].join("\n"),
 
   src: () => {

@@ -49,7 +49,19 @@ const root: DirNode = {
           children: {
             "README.md": {
               type: "file",
-              content: "A custom image format I designed and led with a few friends. It supports 256 colors, GZIP text compression, and file sizes comparable to PNG.",
+              content: "A custom image format I designed and led with a few friends. It supports 4096 colors, GZIP text compression, and file sizes comparable to PNG.",
+            },
+            "Architecture.md": {
+              type: "file",
+              content: `The architecture of this project can be summarized as follows:
+              1. First we get the dimensions of the image, and append this to beginning of the output file.
+              2. We take each pixel, and convert it to an RGB value, we append each to the file.
+              3. Finally, we gzip the text. Since it repeats itself many times, the compression is very effective.
+              
+              We also have a frontend api:
+              1. Decompresses the file
+              2. Reads the dimensions of the image
+              3. Reads each each pixel, and displays it on the screen. When it finishes one horizontal line (It knows the length from the dimensions it previously fetched), it goes to the next line.`,
             }
           }
         }

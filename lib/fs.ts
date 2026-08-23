@@ -44,6 +44,10 @@ const root: DirNode = {
     projects: {
       type: "dir",
       children: {
+        "README.md": {
+          type: "file",
+          content: `This is a list of a few of my projects, but you should check my github for the most up to date information: https://github.com/crosszay1`
+        },
         "Terrific-Image-Format" : {
           type: "dir",
           children: {

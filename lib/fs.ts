@@ -86,6 +86,11 @@ export class fileSystem {
     return true;
   }
 
+  public fileExists(path: string): boolean {
+    const node = this.getNode(path);
+    return node !== null && getType(node) === "file";
+  }
+
   public readFile(path: string): string | null {
     const node = this.getNode(path);
 
@@ -120,9 +125,9 @@ export class fileSystem {
   }
 
   public openFile(path: string): string | null {
-    // We'll just use this as a universal function to open files because having so maZX ny is tedious. We'll still have a `cat` command tho for reading
-    // Some ideas just to write them down for things to open: music files, images, maybe even videos?
-    return "placeholder";
+    // Universal opener for files (music, images, videos later). `cat` stays for reading.
+    if (!this.fileExists(path)) return null;
+    return this.readFile(path) ?? "";
   }
 }
 

@@ -81,7 +81,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
 
   open: (args = []) => {
     const path = args[0] ?? "";
-    if (fs.isDirValid(path)) return `Is a directory: ${path}`;
+    if (fs.isDirValid(path)) return `${path} is a directory: ${path}`;
     if (fs.openFile(path) === null) return `No such file or directory: ${path}`;
     return `Opening ${path}...`;
   },

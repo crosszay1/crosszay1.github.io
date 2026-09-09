@@ -5,7 +5,7 @@
 sudo apt install curl fish # Get curl & fish
 curl -fsSL https://tailscale.com/install.sh | sh # Install tailscale
 curl https://cursor.com/install -fsS | bash # Install cursor
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh # Install zoxide
+# curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh # Install zoxide, may cause python installation
 
 # Language specific
 npm install

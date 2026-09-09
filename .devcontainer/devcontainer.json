@@ -10,8 +10,8 @@
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:4": {"moby": false}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+    
   },
 
   "customizations": {
@@ -19,10 +19,6 @@
       "extensions": [
         "PKief.material-icon-theme",
         "ms-vscode-remote.remote-ssh",
-        "charliermarsh.ruff",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-python.debugpy",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "eamodio.gitlens",

@@ -72,7 +72,7 @@ export const commands: Record<string, (args?: string[]) => string> = {
     const listing = fs.listDirectory(path);
     if (!listing) return `No such file or directory`;
     return Object.entries(listing)
-      .map(([name, node]) => `${node.type === "dir" ? "📁" : "📄"} ${name}`)
+      .map(([name, node]) => `${node.type === "dir" ? "■" : "◆"} ${name}`)
       .join("\n");
   },
 
